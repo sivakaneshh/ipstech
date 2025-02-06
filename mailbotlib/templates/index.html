@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Reminder System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Library Reminder System</h1>
+            <p class="subtitle">Upload your student data to send due date reminders</p>
+        </header>
+
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="upload-section">
+                <form method="POST" enctype="multipart/form-data" class="upload-form">
+                    <div class="file-input-container">
+                        <input type="file" name="file" id="file" accept=".xlsx,.csv" class="file-input">
+                        <label for="file" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span class="file-text">Choose Excel/CSV file</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Reminders</button>
+                </form>
+            </div>
+
+            <!-- <div class="instructions">
+                <h2>Instructions</h2>
+                <ul>
+                    <li>Upload an Excel (.xlsx) or CSV file containing student information</li>
+                    <li>Ensure your file has the following columns:
+                        <ul>
+                            <li>Name</li>
+                            <li>Email</li>
+                            <li>BookName</li>
+                            <li>DueDate</li>
+                        </ul>
+                    </li>
+                    <li>The system will automatically send reminder emails to all students</li>
+                </ul>
+            </div> -->
+                <script>
+                    document.getElementById("file").addEventListener("change", function() {
+                        var fileName = this.files[0] ? this.files[0].name : "Choose Excel/CSV file";
+                        document.querySelector(".file-text").textContent = fileName;
+                    });
+                </script>
+
+            
+        </main>
+    </div>
+    <footer>
+        <p>IPS TECH &copy; 2025</p>
+    </footer>
+</body>
+</html>
